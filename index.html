@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // Simulating an asynchronous function to create a post
+function createPost(post) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(post);
+    }, 1000); // Simulating a 1-second delay for creating a post
+  });
+}
+
+// Simulating an asynchronous function to update the last user activity time
+function updateLastUserActivityTime(userId, activityTime) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ userId, activityTime });
+    }, 1000); // Simulating a 1-second delay for updating last activity time
+  });
+}
+
+// Simulating an asynchronous function to delete the last post
+function deleteLastPost(posts) {
+  return new Promise((resolve) => {
+    // Simulating deletion of the last post
+    const deletedPost = posts.pop();
+    resolve(deletedPost);
+  });
+}
+
+// Main function to create a post, update last activity time, and delete the last post
+async function createPostAndUpdateActivity(userId, post) {
+  try {
+    // Create a post
+    const createdPost = await createPost(post);
+
+    // Update last activity time
+    const lastActivityTime = new Date().toISOString();
+    const updatedActivity = await updateLastUserActivityTime(userId, lastActivityTime);
+
+    console.log('Post created:', createdPost);
+    console.log('Last Activity Time:', updatedActivity.activityTime);
+
+    // Simulating an array to hold posts
+    const posts = [createdPost];
+
+    // Delete the last post
+    const deletedPost = await deleteLastPost(posts);
+    console.log('Post deleted:', deletedPost);
+
+    // After deletion, log the new set of posts
+    console.log('New set of posts:', posts);
+  } catch (error) {
+    console.error('Error occurred:', error);
+  }
+}
+
+// Example usage:
+const userId = 'user123';
+const post = { title: 'My new post', content: 'This is the content of the post' };
+
+createPostAndUpdateActivity(userId, post);
+
+</script>
+</html>
